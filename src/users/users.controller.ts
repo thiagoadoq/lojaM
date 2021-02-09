@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -23,10 +25,21 @@ export class UsersController {
 
   @Post()
   async criar(@Body() user: User): Promise<User> {
-    const saltOrRounds = 10;
-    const hash = await bcrypt.hash(user.password, saltOrRounds);
-    user.password = hash;
-    return this.usersService.criar(user);
+    const userDto = await this.usersService.getByEmail(user.email);
+    console.log(userDto);
+    if (!userDto) {
+      const saltOrRounds = 10;
+      const hash = await bcrypt.hash(user.password, saltOrRounds);
+      user.password = hash;
+      return this.usersService.criar(user);
+    } else
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Email já cadastrado na nossa base!',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
   }
 
   @Get(':id')

@@ -1,8 +1,10 @@
+import { AcessController } from './access/acess.controller';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { UsersService } from './users/users.service';
 
 @Module({
   imports: [
@@ -11,7 +13,7 @@ import { UsersModule } from './users/users.module';
     ), // Insira aqui a string de conexão do MongoDB
     UsersModule,
   ],
-  controllers: [AppController],
+  controllers: [AcessController, AppController],
   providers: [AppService],
 })
 export class AppModule {}

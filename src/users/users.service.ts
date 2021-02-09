@@ -21,8 +21,19 @@ export class UsersService {
     return this.userModel.findById(id).exec();
   }
 
-  async atualizar(id: string, gato: User): Promise<User> {
-    return this.userModel.findByIdAndUpdate(id, gato).exec();
+  async buscarEmail(email: string): Promise<User[]> {
+    return await this.userModel.find(
+      { email: { $regex: email, $options: 'i' } },
+      { __v: false },
+    );
+  }
+
+  async getByEmail(email: string) {
+    return await this.userModel.findOne({ email }).exec();
+  }
+
+  async atualizar(id: string, user: User): Promise<User> {
+    return this.userModel.findByIdAndUpdate(id, user).exec();
   }
 
   async remover(id: string) {
