@@ -10,6 +10,8 @@ import {
 import { User } from './user';
 import { UsersService } from './users.service';
 
+import * as bcrypt from 'bcrypt';
+
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -21,6 +23,9 @@ export class UsersController {
 
   @Post()
   async criar(@Body() user: User): Promise<User> {
+    const saltOrRounds = 10;
+    const hash = await bcrypt.hash(user.password, saltOrRounds);
+    user.password = hash;
     return this.usersService.criar(user);
   }
 
