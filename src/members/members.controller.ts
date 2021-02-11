@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
+  Param,
   Post,
 } from '@nestjs/common';
 import { Member } from './member';
@@ -11,6 +13,17 @@ import { MemberService } from './member.service';
 @Controller('members')
 export class MembersController {
   constructor(private readonly membersService: MemberService) {}
+
+  @Get()
+  async listarTodos(): Promise<Member[]> {
+    return this.membersService.listarTodos();
+  }
+
+  @Get(':id')
+  async buscarPorId(@Param('_id') _id: string): Promise<Member> {
+    console.log(_id);
+    return this.membersService.buscarPorId(_id);
+  }
 
   @Post()
   async criar(@Body() member: Member): Promise<Member> {

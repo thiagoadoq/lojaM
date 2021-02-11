@@ -1,3 +1,5 @@
+import { ImesController } from './CadIME/imes.controller';
+import { ImeModule } from './CadIME/ime.module';
 import { MembersController } from './members/members.controller';
 import { MemberModule } from './members/member.module';
 import { AcessController } from './access/acess.controller';
@@ -16,8 +18,9 @@ import { MemberService } from './members/member.service';
     ), // Insira aqui a string de conexão do MongoDB
     UsersModule,
     MemberModule,
+    ImeModule,
   ],
-  controllers: [AppController],
+  controllers: [ImesController, AppController],
   providers: [AppService],
 })
 export class AppModule {}
