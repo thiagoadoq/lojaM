@@ -26,6 +26,7 @@ export class UsersController {
   @Post()
   async criar(@Body() user: User): Promise<User> {
     const userDto = await this.usersService.getByEmail(user.email);
+    
     if (!userDto) {
       const saltOrRounds = 10;
       const hash = await bcrypt.hash(user.password, saltOrRounds);
