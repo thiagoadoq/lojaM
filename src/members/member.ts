@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Esposa } from './Esposa';
+import { Esposa } from './esposa';
 import { Depedente } from './depedente';
 
 @Schema()
