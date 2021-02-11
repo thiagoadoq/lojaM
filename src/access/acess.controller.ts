@@ -20,6 +20,16 @@ export class AcessController {
   async login(@Body() userDto: User): Promise<User> {
     const user = await this.usersService.getByEmail(userDto.email);
 
+    if (!user) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Email do usuário não entrodato na nossa base!',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     const userPassword = await bcrypt.compare(userDto.password, user.password);
 
     if (userPassword && user.email == userDto.email) {
