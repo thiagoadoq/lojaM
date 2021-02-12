@@ -21,15 +21,26 @@ export class UsersService {
     return this.userModel.findById(id).exec();
   }
 
-  async buscarEmail(email: string): Promise<User[]> {
-    return await this.userModel.find(
-      { email: { $regex: email, $options: 'i' } },
-      { __v: false },
-    );
-  }
+  // async buscarEmail(email: string): Promise<User[]> {
+  //   return await this.userModel.find(
+  //     { email: { $regex: email, $options: 'i' } },
+  //     { __v: false },
+  //   );
+  // }
 
+  //Pesquisar por email
   async getByEmail(email: string) {
     return await this.userModel.findOne({ email }).exec();
+  }
+
+  //Pesquisar por nome
+  async getByName(name: string) {
+    return await this.userModel.findOne({ name }).exec();
+  }
+
+  //Pesquisar por cpf
+  async getByCpf(cpf: string) {
+    return await this.userModel.findOne({ cpf }).exec();
   }
 
   async atualizar(id: string, user: User): Promise<User> {

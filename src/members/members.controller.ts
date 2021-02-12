@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { Member } from './member';
 import { MemberService } from './member.service';
@@ -20,9 +21,56 @@ export class MembersController {
   }
 
   @Get(':id')
-  async buscarPorId(@Param('_id') _id: string): Promise<Member> {
-    console.log(_id);
+  async buscarPorId(@Param('id') _id: string): Promise<Member> {
     return this.membersService.buscarPorId(_id);
+  }
+
+  @Get('/email/:email')
+  async buscarPorEmail(@Param('email') email: string): Promise<Member> {
+    const userEmail = await this.membersService.getByEmail(email);
+
+    if (userEmail) {
+      return userEmail;
+    } else
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Email do obreiro não encontrado!',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+  }
+
+  //Ver se esta validando loopcase
+  @Get('/name/:name')
+  async buscarPorNome(@Param('name') nomeUser: string): Promise<Member> {
+    const userName = await this.membersService.getByName(nomeUser);
+    if (userName) {
+      return userName;
+    } else
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Nome do obreiro não encontrado!',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+  }
+
+  @Get('/cpf/:cpf')
+  async buscarPorCpf(@Param('cpf') cpf: string): Promise<Member> {
+    const userCpf = await this.membersService.getByCpf(cpf);
+
+    if (userCpf) {
+      return userCpf;
+    } else
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'CPF do obreiro não encontrado!',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
   }
 
   @Post()
@@ -43,5 +91,13 @@ export class MembersController {
     //     },
     //     HttpStatus.BAD_REQUEST,
     //   );
+  }
+
+  @Put(':id')
+  async atualizar(
+    @Param('id') id: string,
+    @Body() memberAtualizado: Member,
+  ): Promise<Member> {
+    return this.membersService.atualizar(id, memberAtualizado);
   }
 }

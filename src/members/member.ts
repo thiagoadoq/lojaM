@@ -1,27 +1,27 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Esposa } from './esposa';
-import { Depedente } from './depedente';
+import { Wife } from './wife';
+import { Dependent } from './dependent';
 
 @Schema()
 export class Member extends Document {
   @Prop()
-  nameLoja: string;
+  storeName: string;
 
   @Prop()
-  potencia: string;
+  potency: string;
 
   @Prop()
-  cordenacao: string;
+  coordination: string;
 
   @Prop()
-  nomeUser: string;
+  userName: string;
 
   @Prop()
-  dataNacimento: Date;
+  birthDate: Date;
 
   @Prop()
-  dataCadastro: Date;
+  registerDate: Date;
 
   @Prop()
   cim: number;
@@ -39,22 +39,22 @@ export class Member extends Document {
   cep: string;
 
   @Prop()
-  endereco: string;
+  address: string;
 
   @Prop()
   email: string;
 
   @Prop()
-  telFixo: string;
+  landline: string;
 
   @Prop()
-  celular: string;
+  phone: string;
 
   @Prop()
-  esposa: Esposa;
+  wife: Wife;
 
   @Prop()
-  depedente: Depedente[];
+  dependent: Dependent[];
 }
 
 export const MemberSchema = SchemaFactory.createForClass(Member);

@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Query,
   Put,
 } from '@nestjs/common';
 import { User } from './user';
@@ -23,10 +24,31 @@ export class UsersController {
     return this.usersService.listarTodos();
   }
 
+  @Get(':id')
+  async buscarPorId(@Param('id') id: string): Promise<User> {
+    return this.usersService.buscarPorId(id);
+  }
+
+  @Get('/email/:email')
+  async buscarPorEmail(@Param('email') email: string): Promise<User> {
+    return this.usersService.getByEmail(email);
+  }
+
+  //Ver se esta validando loopcase
+  @Get('/name/:name')
+  async buscarPorNome(@Param('name') name: string): Promise<User> {
+    return this.usersService.getByName(name);
+  }
+
+  @Get('/cpf/:cpf')
+  async buscarPorCpf(@Param('cpf') cpf: string): Promise<User> {
+    return this.usersService.getByCpf(cpf);
+  }
+
   @Post()
   async criar(@Body() user: User): Promise<User> {
     const userDto = await this.usersService.getByEmail(user.email);
-    
+
     if (!userDto) {
       const saltOrRounds = 10;
       const hash = await bcrypt.hash(user.password, saltOrRounds);
@@ -40,11 +62,6 @@ export class UsersController {
         },
         HttpStatus.BAD_REQUEST,
       );
-  }
-
-  @Get(':id')
-  async buscarPorId(@Param('id') id: string): Promise<User> {
-    return this.usersService.buscarPorId(id);
   }
 
   @Put(':id')

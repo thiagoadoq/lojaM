@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema()
-export class Depedente extends Document {
+export class Dependent extends Document {
   @Prop()
   name: string;
 
@@ -10,10 +10,10 @@ export class Depedente extends Document {
   email: string;
 
   @Prop()
-  dataNiver: Date;
+  birthday: Date;
 
   @Prop()
-  especificacao: string;
+  specification: string;
 }
 
-export const DepedenteSchema = SchemaFactory.createForClass(Depedente);
+export const DependentSchema = SchemaFactory.createForClass(Dependent);

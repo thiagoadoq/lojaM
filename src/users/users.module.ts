@@ -4,6 +4,7 @@ import { User, UserSchema } from './user';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { AcessController } from 'src/access/acess.controller';
+import { DashboardController } from 'src/dashboard/dashboard.controller';
 
 @Module({
   imports: [

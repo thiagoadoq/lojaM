@@ -1,26 +1,23 @@
-import { ImesController } from './CadIME/imes.controller';
+import { DashboardController } from './dashboard/dashboard.controller';
 import { ImeModule } from './CadIME/ime.module';
-import { MembersController } from './members/members.controller';
 import { MemberModule } from './members/member.module';
-import { AcessController } from './access/acess.controller';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { UsersService } from './users/users.service';
-import { MemberService } from './members/member.service';
 
 @Module({
   imports: [
     MongooseModule.forRoot(
       'mongodb+srv://thiago:13234578@agendador.f65ge.mongodb.net/loja?retryWrites=true&w=majority',
-    ), // Insira aqui a string de conexão do MongoDB
+      { useFindAndModify: false },
+    ),
     UsersModule,
     MemberModule,
     ImeModule,
   ],
-  controllers: [ImesController, AppController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
