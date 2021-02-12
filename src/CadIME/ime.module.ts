@@ -1,8 +1,9 @@
 import { ImeService } from './ime.service';
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ImeSchema } from './ime';
 import { ImesController } from './imes.controller';
+import { MemberModule } from 'src/members/member.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ImesController } from './imes.controller';
         schema: ImeSchema,
       },
     ]),
+    forwardRef(() => MemberModule),
   ],
   controllers: [ImesController],
   providers: [ImeService],

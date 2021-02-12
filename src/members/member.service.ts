@@ -1,11 +1,21 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Member } from './member';
 import { Model } from 'mongoose';
+import { ImeService } from 'src/CadIME/ime.service';
 
 @Injectable()
 export class MemberService {
-  constructor(@InjectModel('members') private memberModel: Model<Member>) {}
+  constructor(
+    @InjectModel('members')
+    private memberModel: Model<Member>,
+  ) {}
 
   async listarTodos(): Promise<Member[]> {
     return this.memberModel.find().exec();
@@ -30,14 +40,21 @@ export class MemberService {
   }
 
   async validaDados(member: Member) {
-    const query = { cpf: member.cpf };
-    const memberCpfDto = await this.memberModel.find(query);
+    const queryCpf = { cpf: member.cpf };
+    const queryEmail = { email: member.email };
+    const queryIme = { ime: member.ime };
 
-    const memberWifiCpfDto = memberCpfDto.find(
-      c => c.wife.email == member.wife.email,
-    );
+    const memberCpfDto = await this.memberModel.find(queryCpf);
 
-    const data = { member: memberCpfDto, wife: memberWifiCpfDto };
+    const memberEmailDto = await this.memberModel.find(queryEmail);
+
+    const memberImelDto = await this.memberModel.find(queryIme);
+
+    const data = {
+      memberCpfDto: memberCpfDto,
+      memberEmailDto: memberEmailDto,
+      memberImelDto: memberImelDto,
+    };
 
     return data;
   }

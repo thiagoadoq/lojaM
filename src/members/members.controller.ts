@@ -8,6 +8,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+
 import { Member } from './member';
 import { MemberService } from './member.service';
 
@@ -75,6 +76,31 @@ export class MembersController {
 
   @Post()
   async criar(@Body() member: Member): Promise<Member> {
+    const validacoes = this.membersService.validaDados(member);
+
+    const memberDto = (await validacoes).memberCpfDto;
+    const memberEmailDto = (await validacoes).memberEmailDto;
+
+    if (memberEmailDto.length > 0) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Email do usuário já cadastrado na nossa base de dados!',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (memberDto.length > 0) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'CPF do usuário já está cadastrado na nossa base!',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     return await this.membersService.criar(member);
   }
 

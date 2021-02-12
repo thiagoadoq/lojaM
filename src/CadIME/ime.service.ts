@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { finished } from 'stream';
+import { MemberService } from 'src/members/member.service';
 import { Ime } from './ime';
 
 @Injectable()
 export class ImeService {
-  constructor(@InjectModel('imes') private imeModel: Model<Ime>) {}
+  constructor(
+    @InjectModel('imes')
+    private imeModel: Model<Ime>,
+  ) {}
 
   async newIme(ime: Ime): Promise<Ime> {
     const newime = new this.imeModel(ime);
