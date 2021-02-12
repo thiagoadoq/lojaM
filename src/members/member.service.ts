@@ -29,23 +29,20 @@ export class MemberService {
     return await this.memberModel.findOne({ cpf }).exec();
   }
 
-  async criar(member: Member): Promise<Member> {
+  async validaDados(member: Member) {
     const query = { cpf: member.cpf };
-    const query1 = { email: member.wife.email };
+    const memberCpfDto = await this.memberModel.find(query);
 
-    const memberCpfDto = await this.memberModel.countDocuments(query);
-    const memberWifiCpfDto = await this.memberModel.countDocuments(query1);
+    const memberWifiCpfDto = memberCpfDto.find(
+      c => c.wife.email == member.wife.email,
+    );
 
-    if (memberCpfDto) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Cpf do do usuário já cadastrado!',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+    const data = { member: memberCpfDto, wife: memberWifiCpfDto };
 
+    return data;
+  }
+
+  async criar(member: Member): Promise<Member> {
     const newUser = new this.memberModel(member);
     return newUser.save();
   }

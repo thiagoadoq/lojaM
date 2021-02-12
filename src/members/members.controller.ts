@@ -76,21 +76,6 @@ export class MembersController {
   @Post()
   async criar(@Body() member: Member): Promise<Member> {
     return await this.membersService.criar(member);
-
-    // const userDto = await this.userSevice.getByEmail(member.email);
-
-    // if (!userDto) {
-
-    //   return await  this.membersService.criar(Member);
-
-    // } else
-    //   throw new HttpException(
-    //     {
-    //       status: HttpStatus.BAD_REQUEST,
-    //       error: 'Email já cadastrado na nossa base!',
-    //     },
-    //     HttpStatus.BAD_REQUEST,
-    //   );
   }
 
   @Put(':id')

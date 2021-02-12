@@ -24,10 +24,10 @@ export class Member extends Document {
   registerDate: Date;
 
   @Prop()
-  cim: number;
+  cim: string;
 
   @Prop()
-  ime: number;
+  ime: string;
 
   @Prop()
   cpf: string;
