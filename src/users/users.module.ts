@@ -14,7 +14,7 @@ import { AcessController } from 'src/access/acess.controller';
       },
     ]),
   ],
-
+  exports: [UsersService],
   controllers: [UsersController, AcessController],
   providers: [UsersService],
 })

@@ -13,8 +13,8 @@ import { MemberModule } from 'src/members/member.module';
         schema: ImeSchema,
       },
     ]),
-    forwardRef(() => MemberModule),
   ],
+  exports: [ImeService],
   controllers: [ImesController],
   providers: [ImeService],
 })

@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name)
+    private userModel: Model<User>,
+  ) {}
 
   async listarTodos(): Promise<User[]> {
     return this.userModel.find().exec();
@@ -20,13 +24,6 @@ export class UsersService {
   async buscarPorId(id: string): Promise<User> {
     return this.userModel.findById(id).exec();
   }
-
-  // async buscarEmail(email: string): Promise<User[]> {
-  //   return await this.userModel.find(
-  //     { email: { $regex: email, $options: 'i' } },
-  //     { __v: false },
-  //   );
-  // }
 
   //Pesquisar por email
   async getByEmail(email: string) {

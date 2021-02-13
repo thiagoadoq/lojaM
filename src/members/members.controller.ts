@@ -7,7 +7,11 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ImeService } from 'src/CadIME/ime.service';
+import { UsersService } from 'src/users/users.service';
 
 import { Member } from './member';
 import { MemberService } from './member.service';
@@ -74,6 +78,7 @@ export class MembersController {
       );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async criar(@Body() member: Member): Promise<Member> {
     const validacoes = this.membersService.validaDados(member);

@@ -9,6 +9,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Member } from './member';
 import { Model } from 'mongoose';
 import { ImeService } from 'src/CadIME/ime.service';
+import { Ime } from 'src/CadIME/ime';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class MemberService {

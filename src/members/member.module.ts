@@ -16,7 +16,6 @@ import { ImesController } from 'src/CadIME/imes.controller';
         schema: MemberSchema,
       },
     ]),
-    forwardRef(() => ImeModule),
   ],
 
   controllers: [MembersController, DashboardController],

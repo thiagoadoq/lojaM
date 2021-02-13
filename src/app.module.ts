@@ -1,3 +1,5 @@
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
 import { DashboardController } from './dashboard/dashboard.controller';
 import { ImeModule } from './CadIME/ime.module';
 import { MemberModule } from './members/member.module';
@@ -17,6 +19,7 @@ import { ImeService } from './CadIME/ime.service';
     UsersModule,
     MemberModule,
     ImeModule,
+    // AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
